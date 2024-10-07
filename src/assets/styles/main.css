@@ -2,6 +2,22 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: auto !important;
+}
+
 body {
   margin: 0;
+  background: rgb(18, 18, 18);
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+body::-webkit-scrollbar-track {
+  border-radius: 0 0 8px 0;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(66, 66, 66);
+  border-radius: 10px;
 }
