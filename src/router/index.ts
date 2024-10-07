@@ -13,6 +13,12 @@ const router = createRouter({
       name: 'Tariffs',
       component: () => import('../views/TariffsView.vue'),
       meta: { auth: true }
+    },
+    {
+      path: '/set-tariff',
+      name: 'SetTariff',
+      meta: { auth: true },
+      component: () => import('../views/SetTariffView.vue')
     }
   ]
 })
