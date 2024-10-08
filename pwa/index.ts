@@ -12,6 +12,13 @@ export const PwaOptions: Partial<VitePWAOptions> = {
     short_name: 'Tariffs',
     description: 'PWA приложение для управления тарифами',
     theme_color: 'rgb(18, 18, 18)',
+    shortcuts: [
+      {
+        name: 'Scan QR code',
+        url: '/set-tariff',
+        icons: [{ src: 'shortcut-scan.png', sizes: '96x96', type: 'image/png' }]
+      }
+    ],
     screenshots: [
       {
         src: 'pwa-screenshots/pwa-desk1.png',
