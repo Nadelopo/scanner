@@ -6,7 +6,7 @@ import { login as LogIn, signup as SignUp, getAccessToken } from '../api/service
 export const useAuthStore = defineStore('auth', () => {
   const isAuth = ref(false)
 
-  const setToken = async (access: string) => {
+  const setAuth = async (access: string) => {
     const db = await openDB('app-db', 1)
     isAuth.value = true
     await db.put('auth', { id: 1, token: access })
@@ -15,31 +15,29 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (username: string, password: string) => {
     const { error, data } = await LogIn(username, password)
     if (error) return
-    setToken(data.accessToken)
+    setAuth(data.accessToken)
     return true
   }
 
   const signup = async (username: string, password: string) => {
     const { error, data } = await SignUp(username, password)
     if (error) return
-    setToken(data.accessToken)
+    setAuth(data.accessToken)
     return true
   }
 
   const checkToken = async (): Promise<boolean> => {
     const access = await getAccessToken()
+    if (!access) return false
 
-    if (access) {
-      const isValid = true // isTokenExpired(access)
+    const isValid = true // isTokenExpired(access)
 
-      if (isValid) {
-        isAuth.value = true
-        return true
-      } else {
-        await logout()
-        return false
-      }
+    if (isValid) {
+      isAuth.value = true
+      return true
     }
+
+    await logout()
     return false
   }
 
