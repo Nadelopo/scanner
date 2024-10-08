@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { VThemeProvider, VContainer, VBtn, VSnackbar } from 'vuetify/components'
 import { useAuthStore } from './stores/authStore'
+import { useTariffStore } from './stores/tariffStore'
 import { useNetworkStatus } from './shared/composables/useNetworkStatus'
 
 const route = useRoute()
@@ -31,9 +32,16 @@ watch(isOnline, () => {
   snackbar.value = true
 })
 
+const { syncTariffs, clearTariffs, setTariffs } = useTariffStore()
+
 const onSynchronize = () => {
+  syncTariffs()
   snackbar.value = false
 }
+
+watchEffect(() => {
+  ;(isAuth.value ? setTariffs : clearTariffs)()
+})
 </script>
 
 <template>

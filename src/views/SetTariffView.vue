@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { VSelect, VBtn, VProgressCircular, VSnackbar } from 'vuetify/components'
+import { type TariffValue, useTariffStore } from '@/stores/tariffStore'
 
 type Point = {
   x: number
@@ -27,7 +28,7 @@ type QRCodeData = {
   cornerPoints: Point[]
 }
 
-const selectedTariff = ref('T1')
+const selectedTariff = ref<TariffValue>('T1')
 const scannedQr = ref<QRCodeData[]>([])
 const router = useRouter()
 
@@ -35,12 +36,21 @@ const onDetect = (result: QRCodeData[]) => {
   scannedQr.value = result
 }
 
+const { createTariff } = useTariffStore()
 const isQrUndetected = ref(false)
 const applyTariff = async () => {
   if (!scannedQr.value.length) {
     isQrUndetected.value = true
     return
   }
+
+  createTariff({
+    id: crypto.randomUUID(),
+    created: new Date().toISOString(),
+    processed: true,
+    qrs: scannedQr.value.map((qr) => qr.rawValue),
+    val: selectedTariff.value
+  })
 
   router.push({ name: 'Tariffs' })
 }

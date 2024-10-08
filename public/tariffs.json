@@ -15,14 +15,14 @@
   },
   {
     "id": "3",
-    "created": "2024-10-04T13:17:9.000Z",
+    "created": "2024-10-04T13:17:09.000Z",
     "processed": false,
     "qrs": ["https://yandex.ru/pogoda/ulyanovsk", "https://www.dns-shop.ru/"],
     "val": "T3"
   },
   {
     "id": "4",
-    "created": "2024-10-05T14:57:9.000Z",
+    "created": "2024-10-05T14:57:09.000Z",
     "processed": false,
     "qrs": ["https://yandex.ru/pogoda/ulyanovsk", "https://www.dns-shop.ru/"],
     "val": "T2"

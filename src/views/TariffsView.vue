@@ -1,18 +1,10 @@
 <script setup lang="ts">
+import { useTariffStore } from '@/stores/tariffStore'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { VBtn, VCard, VCardText, VChip, VCol, VRow, VProgressCircular } from 'vuetify/components'
 
-const currentDate = new Date()
-const nextDay = new Date()
-const tariffs = Array(8)
-  .fill(null)
-  .map((_, i) => ({
-    id: i,
-    val: 'T' + ((i % 3) + 1),
-    qrs: ['url' + i],
-    processed: false,
-    created: nextDay.setDate(currentDate.getDate() + i)
-  }))
+const { tariffs } = storeToRefs(useTariffStore())
 
 const router = useRouter()
 const addTariff = () => {

@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VForm, VTextField, VBtn } from 'vuetify/components'
-import type { SubmitEventPromise } from 'vuetify'
 import { useAuthStore } from '@/stores/authStore'
+import type { SubmitEventPromise } from 'vuetify'
 
 const username = ref('')
 const password = ref('')
