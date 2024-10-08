@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { VThemeProvider, VContainer, VBtn, VSnackbar } from 'vuetify/components'
+import { useAuthStore } from './stores/authStore'
 import { useNetworkStatus } from './shared/composables/useNetworkStatus'
 
 const route = useRoute()
 const router = useRouter()
+const { logout } = useAuthStore()
 
 const onLogout = () => {
+  logout()
   router.push({ name: 'Auth' })
 }
 
+const { isAuth } = storeToRefs(useAuthStore())
 const snackbar = ref(false)
 const snackbarMessage = ref('')
-
 const { isOnline } = useNetworkStatus()
+
 watch(isOnline, () => {
   if (isOnline.value) {
-    snackbarMessage.value = 'Соеденение восстановлено.\nНе синхронизированные данные будут утеряны.'
+    snackbarMessage.value =
+      'Соеденение восстановлено.' +
+      (isAuth.value ? '\nНе синхронизированные данные будут утеряны.' : '')
   } else {
     snackbarMessage.value = 'Соеденение прервано. Приложение находится в оффлайн режиме.'
   }
@@ -34,13 +41,11 @@ const onSynchronize = () => {
     <v-container>
       <v-snackbar v-model="snackbar" multi-line timeout="-1">
         <div style="white-space: pre-wrap">{{ snackbarMessage }}</div>
-        <!-- @vue-expect-error v-if="isOnline && isAuth" -->
-        <template v-if="isOnline">
+        <template v-if="isOnline && isAuth">
           <v-btn color="red" variant="text" @click="onSynchronize"> синхронизировать </v-btn>
           <v-btn color="red" class="px-0" variant="text" @click="snackbar = false"> закрыть </v-btn>
         </template>
-        <!-- @vue-expect-error v-if="!isOnline || !isAuth" -->
-        <template v-if="!isOnline" #actions>
+        <template v-if="!isOnline || !isAuth" #actions>
           <v-btn color="red" variant="text" @click="snackbar = false"> закрыть </v-btn>
         </template>
       </v-snackbar>

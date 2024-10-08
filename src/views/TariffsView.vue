@@ -16,7 +16,7 @@ const tariffs = Array(8)
 
 const router = useRouter()
 const addTariff = () => {
-  router.push('/set-tariff')
+  router.push({ name: 'SetTariff' })
 }
 </script>
 

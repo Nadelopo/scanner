@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VForm, VTextField, VBtn } from 'vuetify/components'
 import type { SubmitEventPromise } from 'vuetify'
+import { useAuthStore } from '@/stores/authStore'
 
 const username = ref('')
 const password = ref('')
@@ -18,17 +19,18 @@ const passwordRules = [
     return 'Пароль должен содержать не менее 8 символов'
   }
 ]
-
+const { login, signup } = useAuthStore()
 const loading = ref(false)
 const isRegister = ref(false)
+
 const auth = async (event: SubmitEventPromise) => {
   const { valid } = await event
   if (!valid) return
   loading.value = true
-  // auth
-  // if (success) {
-  router.push('/tariffs')
-  // }
+  const success = await (isRegister.value ? signup : login)(username.value, password.value)
+  if (success) {
+    router.push({ name: 'Tariffs' })
+  }
 }
 
 const visible = ref(false)

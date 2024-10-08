@@ -42,7 +42,7 @@ const applyTariff = async () => {
     return
   }
 
-  router.push('/tariffs')
+  router.push({ name: 'Tariffs' })
 }
 
 function paintOutline(detectedCodes: any[], ctx: any) {
