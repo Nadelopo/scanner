@@ -11,11 +11,11 @@ const router = useRouter()
 const passwordRules = [
   (value: string) => {
     if (value) return true
-    return 'Password is required'
+    return 'Обязательное поле'
   },
   (value: string) => {
     if (value.length >= 8) return true
-    return 'Password must be at least 8 characters'
+    return 'Пароль должен содержать не менее 8 символов'
   }
 ]
 
@@ -56,7 +56,7 @@ const visible = ref(false)
       </h2>
       <v-text-field
         v-model="username"
-        :rules="[(v) => Boolean(v) || 'Username is required']"
+        :rules="[(v) => Boolean(v) || 'Обязательное поле']"
         label="Username"
         class="mb-4"
       />
