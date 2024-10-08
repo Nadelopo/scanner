@@ -15,13 +15,12 @@ export const myFetch = async (url: string, options: RequestInit) => {
   const response = await fetch(url, options)
 
   if (response.status === 401) {
-    return refreshToken().then((newToken) => {
-      options.headers = {
-        ...options.headers,
-        Authorization: `Bearer ${newToken}`
-      }
-      return fetch(url, options)
-    })
+    const { token } = await refreshToken()
+    options.headers = {
+      ...options.headers,
+      Authorization: `Bearer ${token}`
+    }
+    return fetch(url, options)
   }
 
   return response
